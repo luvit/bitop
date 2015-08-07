@@ -3,7 +3,11 @@
 # To compile with MinGW please run: mingw32-make -f Makefile.mingw
 
 # Include path where lua.h, luaconf.h and lauxlib.h reside:
-INCLUDES= -I/usr/local/include
+
+LUAV     ?= $(shell lua -e "_,_,v=string.find(_VERSION,'Lua (.+)');print(v)")
+PREFIX   ?=/usr/local
+INCLUDES ?= -I$(PREFIX)/include/lua$(LUAV)
+
 
 DEFINES=
 # Use this for the old ARM ABI with swapped FPA doubles.
@@ -50,4 +54,3 @@ clean:
 	$(RM) *.o *.so *.obj *.lib *.exp *.dll *.manifest
 
 .PHONY: all macosx install test clean
-
